@@ -1,0 +1,1 @@
+This repo contains a project testing the properties of cross-correlation maps using simulated timeseries in R.
