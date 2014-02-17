@@ -92,10 +92,10 @@ plot(diff_Y3_diff_X4_ccf)   #more noisy, hard to pick out exact lag #noise destr
 #let's try to do cross-correlation map between Y2 and X1
 max.lag=20;
 CCM_matrix<-NULL;
-for (i in (max.lag+1):length(X1))
+for (i in (max.lag+1):length(Sinuswave_expl))
 for (j in 0:max.lag)
 for (k in j:max.lag)
-CCM_matrix<-rbind(CCM_matrix,c(i,j,k,mean(X1[(i-k):(i-j)],na.rm=TRUE)));
+CCM_matrix<-rbind(CCM_matrix,c(i,j,k,mean(Sinuswave_expl[(i-k):(i-j)],na.rm=TRUE)));
 
 CCM_corr_matrix<-NULL;
 for (j in 0:max.lag)
@@ -104,8 +104,8 @@ for (k in 0:max.lag)
 	relevant_rows<-which(CCM_matrix[,2]==j&CCM_matrix[,3]==k);
 	if (length(relevant_rows)>0)
 	{
-	estimate_Pearson<-cor.test(CCM_matrix[relevant_rows,4],Y2[CCM_matrix[relevant_rows,1]],method="pearson")$estimate;
-	estimate_Spearman<-cor.test(CCM_matrix[relevant_rows,4],Y2[CCM_matrix[relevant_rows,1]],method="spearman")$estimate;	
+	estimate_Pearson<-cor.test(CCM_matrix[relevant_rows,4],Sinuswave_resp_lag[CCM_matrix[relevant_rows,1]],method="pearson")$estimate;
+	estimate_Spearman<-cor.test(CCM_matrix[relevant_rows,4],Sinuswave_resp_lag[CCM_matrix[relevant_rows,1]],method="spearman")$estimate;	
 	}
 	if (length(relevant_rows)==0) {estimate_Pearson=NA;estimate_Spearman=NA};
 CCM_corr_matrix<-rbind(CCM_corr_matrix,c(j,k,estimate_Pearson,estimate_Spearman));
@@ -141,10 +141,10 @@ plot(diag_Pearson,ccf_estimates,xlab="Pearson's",ylab="ccf")
 #let's try the CCM with the noisy dataset Y3 and X4
 max.lag=20;
 CCM_matrix<-NULL;
-for (i in (max.lag+1):length(X4))
+for (i in (max.lag+1):length(Mixed_expl))
 for (j in 0:max.lag)
 for (k in j:max.lag)
-CCM_matrix<-rbind(CCM_matrix,c(i,j,k,mean(X4[(i-k):(i-j)],na.rm=TRUE)));
+CCM_matrix<-rbind(CCM_matrix,c(i,j,k,mean(Mixed_expl[(i-k):(i-j)],na.rm=TRUE)));
 
 CCM_corr_matrix<-NULL;
 for (j in 0:max.lag)
@@ -153,8 +153,8 @@ for (k in 0:max.lag)
 	relevant_rows<-which(CCM_matrix[,2]==j&CCM_matrix[,3]==k);
 	if (length(relevant_rows)>0)
 	{
-	estimate_Pearson<-cor.test(CCM_matrix[relevant_rows,4],Y3[CCM_matrix[relevant_rows,1]],method="pearson")$estimate;
-	estimate_Spearman<-cor.test(CCM_matrix[relevant_rows,4],Y3[CCM_matrix[relevant_rows,1]],method="spearman")$estimate;	
+	estimate_Pearson<-cor.test(CCM_matrix[relevant_rows,4],Mixed_resp_lag[CCM_matrix[relevant_rows,1]],method="pearson")$estimate;
+	estimate_Spearman<-cor.test(CCM_matrix[relevant_rows,4],Mixed_resp_lag[CCM_matrix[relevant_rows,1]],method="spearman")$estimate;	
 	}
 	if (length(relevant_rows)==0) {estimate_Pearson=NA;estimate_Spearman=NA};
 CCM_corr_matrix<-rbind(CCM_corr_matrix,c(j,k,estimate_Pearson,estimate_Spearman));
